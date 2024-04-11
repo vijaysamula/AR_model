@@ -87,22 +87,29 @@ function initialize() {
         });
 
         // GLTF Loader
-        let loader = new THREE.GLTFLoader();
-        loader.load('models/ETERRY.gltf', function(gltf) {
-            gltf.scene.traverse(function(child) {
-                if (child.isMesh) {
-                    child.castShadow = true;
-                    child.receiveShadow = true;
-                }
-            });
+        // GLTF Loader
+		let loader = new THREE.GLTFLoader();
+		loader.load('models/ETERRY.gltf', function(gltf) {
+			gltf.scene.traverse(function(child) {
+				if (child.isMesh) {
+					child.castShadow = false; // Adjust depending on your scene's lighting
+					child.receiveShadow = false; // Adjust depending on your scene's lighting
+					console.log("Mesh found: ", child); // Log mesh details for debugging
+				}
+			});
 
-            gltf.scene.scale.set(1, 1, 1);
-            markerRoot1.add(gltf.scene);
-        }, function(xhr) {
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-        }, function(error) {
-            console.log('An error happened during loading: ' + error);
-        });
+			// Try different scales to ensure the model is visible
+			gltf.scene.scale.set(0.01, 0.01, 0.01); // Adjust scale if the model is too large or too small
+			gltf.scene.position.set(0, 0, 0); // Reset position to ensure it's at the marker
+			gltf.scene.rotation.set(0, Math.PI, 0); // Adjust rotation if necessary
+
+			markerRoot1.add(gltf.scene);
+			console.log("GLTF model added to scene."); // Confirm model is added
+		}, function(xhr) {
+			console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+		}, function(error) {
+			console.error('An error happened during loading: ', error);
+		});
     }
 
     function onResize() {
