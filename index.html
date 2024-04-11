@@ -129,7 +129,11 @@ function initialize()
 		.setPath( 'models/' )
 		.load( 'ETERRY.mtl', function ( materials ) {
 			materials.preload();
-			group.children.forEach(function (mesh) {
+			new THREE.OBJLoader()
+				.setMaterials( materials )
+				.setPath( 'models/' )
+				.load( 'ETERRY.obj', function ( group ) {
+					group.children.forEach(function (mesh) {
                     console.log("Loaded mesh:", mesh);  // Log mesh details
 
                     mesh.material.side = THREE.DoubleSide;
@@ -145,6 +149,7 @@ function initialize()
                     markerRoot1.add(mesh);   // Add each mesh to the markerRoot1
                 });
             }, onProgress, onError );
+		});
 }
 
 
