@@ -129,18 +129,22 @@ function initialize()
 		.setPath( 'models/' )
 		.load( 'ETERRY.mtl', function ( materials ) {
 			materials.preload();
-			new THREE.OBJLoader()
-				.setMaterials( materials )
-				.setPath( 'models/' )
-				.load( 'ETERRY.obj', function ( group ) {
-					group.children.forEach(function (mesh) {
+			group.children.forEach(function (mesh) {
+                    console.log("Loaded mesh:", mesh);  // Log mesh details
+
                     mesh.material.side = THREE.DoubleSide;
-                    mesh.position.y = 1.25;  // Adjust position as necessary
-                    mesh.scale.set(0.25, 0.25, 0.25); // Adjust scale as necessary
+                    mesh.material.transparent = false; // Ensure material is not transparent
+                    mesh.material.opacity = 1;         // Set opacity to full
+
+                    mesh.position.set(0, 0, 0);   // Reset position for visibility
+                    mesh.scale.set(1, 1, 1);      // Set uniform scale
+
+                    let box = new THREE.Box3().setFromObject(mesh);
+                    console.log("Bounding box:", box); // Log bounding box
+
                     markerRoot1.add(mesh);   // Add each mesh to the markerRoot1
                 });
             }, onProgress, onError );
-		});
 }
 
 
