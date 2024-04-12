@@ -133,14 +133,13 @@ function initialize()
 				.setMaterials( materials )
 				.setPath( 'models/' )
 				.load( 'ETERRY.obj', function ( group ) {
-					group.children.forEach(function (mesh) {
-                    mesh.material.side = THREE.DoubleSide;
-                    // mesh.position.y = 4.25;  // Adjust position as necessary
-					mesh.position.set(0, 0, 0);  
-                    mesh.scale.set(1, 1, 1); // Adjust scale as necessary
-                    markerRoot1.add(mesh);   // Add each mesh to the markerRoot1
-                });
-            }, onProgress, onError );
+					mesh0 = group.children[0];
+					mesh0.material.side = THREE.DoubleSide;
+					// mesh0.position.y = 0.25;
+					mesh0.position.set(0,0,0);
+					mesh0.scale.set(1,1,1);
+					markerRoot1.add(mesh0);
+				}, onProgress, onError );
 		});
 }
 
